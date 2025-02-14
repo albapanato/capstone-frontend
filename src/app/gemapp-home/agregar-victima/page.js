@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react"; // npm install lucide-react
 export default function AddIncidentPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+    <div className=" flex items-center justify-center bg-gray-50">
       <div className="max-w-2xl w-full space-y-8 p-8 bg-white rounded-lg shadow-lg m-4">
         <Link
           href="/agregar-suceso"

@@ -110,9 +110,7 @@ export default function WitnessForm() {
 
       {/* Sexo */}
       <div>
-        <Label className="text-sm font-medium text-gray-700 mb-2 block">
-          Sexo
-        </Label>
+        <Label className="text-sm font-medium text-gray-700 mb-2 block"></Label>
         <FormInput
           label="Sexo"
           {...register("sexo")}
