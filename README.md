@@ -1,36 +1,107 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Capstone Project - Global Emergency Map (GEM)
 
-## Getting Started
+🚀 Plataforma para la gestión de incidentes y emergencias medioambientales y crisis humanitarias.
+Los usuarios pueden registrar incidentes, testigos, víctimas y fuentes documentales, además de gestionar verificadores.
 
-First, run the development server:
+--------------------------------------------------------------
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+📁 Estructura del Proyecto
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+La aplicación está organizada en diferentes carpetas y módulos según su funcionalidad:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+📌 1. components/ - Componentes reutilizables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Esta carpeta contiene componentes genéricos utilizados en diferentes formularios y páginas.
+	•	formUbication/ ➝ Componente para capturar ubicación en formularios.
+	•	header/ ➝ Componente de la barra de navegación.
+	•	map/ ➝ Componentes relacionados con la integración de Leaflet (mapas).
+	•	objetos-formulario/ ➝ Componentes básicos de los formularios:
+	•	Button.js ➝ Botón reutilizable.
+	•	FormInput.js ➝ Campo de entrada reutilizable.
+	•	Label.js ➝ Etiqueta de formularios.
+	•	tipos-formulario/ ➝ Contiene los formularios específicos:
+	•	IncidentForm.js ➝ Formulario para reportar un incidente.
+	•	WitnessForm.js ➝ Formulario para testigos.
+	•	VictimForm.js ➝ Formulario para víctimas.
+	•	VerificatorForm.js ➝ Formulario para verificadores.
+	•	DocumentSourceForm.js ➝ Formulario para fuentes documentales.
+	•	usuario/ ➝ Componentes relacionados con el usuario.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+-----------------------------------------------------------------------
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+🌎 2. app/ - Rutas principales
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Aquí se encuentran las páginas y subrutas de la aplicación:
+	•	gemapp-home/ ➝ Página principal con navegación a los formularios.
+	•	agregar-suceso/ ➝ Ruta para agregar un incidente.
+	•	agregar-testigo/ ➝ Ruta para agregar un testigo.
+	•	agregar-victima/ ➝ Ruta para agregar una víctima.
+	•	agregar-verificador/ ➝ Ruta para agregar un verificador.
+	•	agregar-fuente-documental/ ➝ Ruta para agregar una fuente documental.
+	•	login/ ➝ Página de inicio de sesión.
+	•	registro/ ➝ Página de registro de usuario.
+	•	validacion-usuario/ ➝ Página de validación después del registro.
 
-## Deploy on Vercel
+-------------------------------------------------------------------------
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+⚙️ 3. utils/ - Lógica de comunicación con el backend
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Archivos que gestionan la conexión con la API:
+	•	user.js ➝ Autenticación y registro de usuarios.
+	•	incidentApi.js ➝ Operaciones CRUD para incidentes.
+	•	witnessApi.js ➝ Operaciones CRUD para testigos.
+	•	victimsApi.js ➝ Operaciones CRUD para víctimas.
+	•	verificatorApi.js ➝ Operaciones CRUD para verificadores.
+	•	documentSourceApi.js ➝ Operaciones CRUD para fuentes documentales.
+
+-------------------------------------------------------------------------
+
+📌 Principales Funcionalidades
+
+✅ Registro e inicio de sesión de usuarios.
+✅ Gestión de incidentes, testigos y víctimas.
+✅ Validación de usuario mediante JWT.
+✅ Almacenamiento en cookies para evitar pérdida de datos al navegar.
+✅ Integración con mapas Leaflet para capturar ubicación.
+✅ Interfaz optimizada con Tailwind CSS y Next.js.
+
+
+-------------------------------------------------------------------------
+
+🚀 Instalación y Configuración
+
+- npx create-next-app@latest capstone
+- cd capstone
+- npm run dev
+
+instalacion de librerias para los formularios:
+- npm install react-hook-form
+
+instalacion para componente ubicacion:
+- npm install react-leaflet leaflet
+
+instalacion para iconos
+-npm install lucide-react
+
+instalacion para guardar datos de formularios en las cookies:
+- npm install js-cookie
+
+-------------------------------------------------------------------------
+
+📌 Notas Técnicas
+	•	Next.js 15+
+	•	Tailwind CSS para estilos
+	•	React Hook Form para validación
+	•	Leaflet para mapas
+	•	JWT para autenticación
+
+-------------------------------------------------------------------------
+
+🎯 Próximos Pasos
+
+📌 Crar la gestion de datos y almacenamiento en diferentes tablas de base de datos
+📌 Crear test con Cipress
+📌 Realiar tareas antes del 18 de febrero.
+
+-------------------------------------------------------------------------
