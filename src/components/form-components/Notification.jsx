@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const Notification = ({ message, duration = 3, type = "info", onClose }) => {
+export const Notification = ({ message, duration = 3, type = "info", onClose }) => {
   useEffect(() => {
     // Iniciar el temporizador para ocultar la notificación después de `duration` segundos
     const timer = setTimeout(() => {
@@ -19,11 +19,9 @@ const Notification = ({ message, duration = 3, type = "info", onClose }) => {
 
   return (
     <div
-      className={`fixed bottom-4 right-4 p-4 rounded-md shadow-lg ${notificationStyles[type]} transition-opacity`}
+      className={`fixed z-50 bottom-4 right-4 p-4 rounded-md shadow-lg ${notificationStyles[type]} transition-opacity`}
     >
       {message}
     </div>
   );
 };
-
-export default Notification;

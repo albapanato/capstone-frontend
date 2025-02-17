@@ -1,6 +1,9 @@
-export async function sendWitnessData(data) {
+export async function createWitness(data) {
   try {
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/testigo`; // Revisa la API correcta
+    if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
+      throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
+    }
+    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/testigos`; // Revisa la API correcta
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -9,14 +12,12 @@ export async function sendWitnessData(data) {
       body: JSON.stringify(data),
     });
 
-    if (!response.ok) {
+    if (!response?.ok) {
       throw new Error("Error al enviar los datos del testigo");
     }
-
     const result = await response.json();
     return result; // Retorna la respuesta del servidor
   } catch (error) {
-    console.error("❌ Error enviando los datos:", error);
-    throw error; // Lanza el error para manejarlo en el formulario
+    // console.error("Error enviando los datos:", error);
   }
 }

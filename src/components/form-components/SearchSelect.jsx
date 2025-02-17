@@ -12,8 +12,9 @@ export const SearchSelect = ({
   options = [],
   value,
   onChange,
+  disabled,
 }) => {
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState(value ?? '')
   const [isOpen, setIsOpen] = useState(false)
 
   const filteredOptions = options.filter((option) =>
@@ -27,11 +28,14 @@ export const SearchSelect = ({
   }
 
   useEffect(() => {
-    const selectedOption = options.find((option) => option.value.toString() === value)
+    if (!value) return
+    const selectedOption = options.find(
+      (option) => option.value.toString() === value.toString()
+    )
     if (selectedOption) {
       setSearch(selectedOption.label)
     }
-  }, [value])
+  }, [options, value])
 
   return (
     <div className={cn('relative space-y-2', wrapperClassName)}>
@@ -41,6 +45,7 @@ export const SearchSelect = ({
 
       <div className='relative'>
         <input
+          disabled={disabled}
           type='text'
           name={name}
           value={search}

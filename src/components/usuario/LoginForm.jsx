@@ -1,12 +1,12 @@
 "use client";
+import { Button } from "@/components/form-components/Button";
+import { FormInput } from "@/components/form-components/FormInput";
+import Notification from "@/components/form-components/Notification";
+import { loginVerificator } from "@/services/verificator"; // Importamos la función de API
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { loginUser } from "../../utils/user"; // Importamos la función de API
-import { Button } from "../form-components/Button";
-import { FormInput } from "../form-components/FormInput";
-import Notification from "../form-components/Notification";
 
 export default function LoginForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -25,10 +25,7 @@ export default function LoginForm() {
     setError("");
 
     try {
-      console.log("📩 Datos enviados al backend:", data);
-      const res = await loginUser(data);
-
-      console.log("✅ Respuesta del backend:", res);
+      const res = await loginVerificator(data);
 
       if (res.error) {
         throw new Error(res.error);
@@ -43,9 +40,9 @@ export default function LoginForm() {
       localStorage.setItem("jwt", res.token);
 
       // ✅ Redirigir al usuario autenticado
-      router.push("/gemapp-home");
+      router.push("/validacion");
     } catch (err) {
-      console.error("❌ Error en el login:", err);
+      console.error("Error en el login:", err);
       setError(err.message);
     } finally {
       setIsSubmitting(false);

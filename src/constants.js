@@ -13,9 +13,9 @@ export const VALIDATOR_ROUTE = "/validacion"
 export const LOGIN_ROUTE = "/login"
 
 
-export const ROUTE_BY_TYPE = {
-  [HAS_DOCUMENTAL_SOURCES]: ADD_DOCUMENTAL_SOURCE_ROUTE,
-  [HAS_WITNESSES]: ADD_WITNESS_ROUTE,
-  [HAS_VICTIMS]: ADD_VICTIM_ROUTE,
+export const TITLE_BY_STEP = {
+  [HAS_DOCUMENTAL_SOURCES]: "Agregar fuente",
+  [HAS_WITNESSES]: "Agregar testigo",
+  [HAS_VICTIMS]: "Agregar víctima",
 }
 

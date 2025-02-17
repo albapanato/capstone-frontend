@@ -1,14 +1,16 @@
 'use client'
-import { useHandleCookiesData } from '@/hooks/use-handle-cookies-data'
-import { sendVictimData } from '@/utils/victimsApi'
+import { Button } from '@/components/form-components/Button'
+import { FormInput } from '@/components/form-components/FormInput'
+import { IncidentSearcher } from '@/components/form-components/IncidentSearcher'
+import { Notification } from '@/components/form-components/Notification'
+import { HOME_ROUTE } from '@/constants'
+import { incidentsMock } from '@/data/incidents'
+import { createVictim } from '@/services/victims'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Button } from '../form-components/Button'
-import { FormInput } from '../form-components/FormInput'
-import { HAS_VICTIMS, ROUTE_BY_TYPE } from '@/constants'
 
-export default function VictimForm() {
+export default function VictimForm({ onComplete, incidentId }) {
   const router = useRouter()
   const {
     register,
@@ -16,99 +18,138 @@ export default function VictimForm() {
     handleSubmit,
     setValue,
     watch,
+    getValues,
   } = useForm()
-  const { incidentId, nextStep } = useHandleCookiesData(HAS_VICTIMS)
-  console.log("🚀 ~ VictimForm ~ nextStep:", nextStep)
 
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [error, setError] = useState('')
+  const [notification, setNotification] = useState('')
+  const isIncidentSelected = !!getValues().incidentId
+
+  useEffect(() => {
+    if (incidentId) {
+      setValue('incidentId', incidentId)
+    }
+  }, [incidentId, setValue])
 
   const onSubmit = async (data) => {
-    console.log('Datos de la víctima enviados:', data)
     setIsSubmitting(true)
-    setError('')
-
-    try {
-      // ✅ Enviar los datos al backend usando la función de `utils/api.js`
-      // const response = await sendVictimData(data)
-      // console.log('✅ Respuesta del servidor:', response)
-      console.log("route ",ROUTE_BY_TYPE[nextStep])
-      router.push(ROUTE_BY_TYPE[nextStep] ?? '/')
-    } catch (error) {
+    const response = await createVictim(data)
+    if (!response?.ok) {
+      setNotification({
+        message:
+          'Hubo un error al enviar los datos. Por favor, inténtalo de nuevo.',
+        type: 'error',
+      })
       setIsSubmitting(false)
-      setError(error.message || 'Hubo un error al enviar los datos.')
+      return
     }
+    setNotification({
+      message: 'Testigo registrado correctamente',
+      type: 'success',
+    })
+    setIsSubmitting(false)
+    if (onComplete) {
+      onComplete()
+      return
+    }
+    router.push(HOME_ROUTE)
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className='space-y-6 max-w-2xl mx-auto'
-    >
-      {/* Estado de la víctima */}
-      <div>
-        <FormInput
-          label='Estado'
-          {...register('estado', { required: 'Campo obligatorio' })}
-          error={errors.estado?.message}
+    <>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className='space-y-6 max-w-3xl mx-auto'
+      >
+        <IncidentSearcher
+          disabled={!!incidentId}
+          incidents={incidentsMock}
+          error={errors.incidentId?.message}
+          watch={watch}
+          setValue={setValue}
         />
-      </div>
+        {/* Estado de la víctima */}
+        <div>
+          <FormInput
+            disabled={!isIncidentSelected}
+            label='Estado*'
+            {...register('estado', { required: 'Campo obligatorio' })}
+            error={errors.estado?.message}
+          />
+        </div>
 
-      {/* Nombre y Apellidos */}
-      <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-        <FormInput
-          label='Nombre'
-          {...register('nombre', { required: 'Campo obligatorio' })}
-          error={errors.nombre?.message}
-        />
-        <FormInput
-          label='Apellidos'
-          {...register('apellidos', { required: 'Campo obligatorio' })}
-          error={errors.apellidos?.message}
-        />
-      </div>
+        {/* Nombre y Apellidos */}
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+          <FormInput
+            disabled={!isIncidentSelected}
+            label='Nombre*'
+            {...register('nombre', { required: 'Campo obligatorio' })}
+            error={errors.nombre?.message}
+          />
+          <FormInput
+            disabled={!isIncidentSelected}
+            label='Apellidos*'
+            {...register('apellidos', { required: 'Campo obligatorio' })}
+            error={errors.apellidos?.message}
+          />
+        </div>
 
-      {/* DNI y Teléfonos */}
-      <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-        <FormInput
-          label='DNI'
-          {...register('DNI', { required: 'Campo obligatorio' })}
-          error={errors.DNI?.message}
-        />
-        <FormInput
-          label='Teléfono'
-          {...register('telefono')}
-          error={errors.telefono?.message}
-        />
-        <FormInput
-          label='Móvil'
-          {...register('movil')}
-          error={errors.movil?.message}
-        />
-      </div>
+        {/* DNI y Teléfonos */}
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+          <FormInput
+            disabled={!isIncidentSelected}
+            label='DNI*'
+            {...register('DNI', { required: 'Campo obligatorio' })}
+            error={errors.DNI?.message}
+          />
+          <FormInput
+            disabled={!isIncidentSelected}
+            label='Teléfono'
+            {...register('telefono')}
+            error={errors.telefono?.message}
+          />
+          <FormInput
+            disabled={!isIncidentSelected}
+            label='Móvil'
+            {...register('movil')}
+            error={errors.movil?.message}
+          />
+        </div>
 
-      {/* Email */}
-      <FormInput
-        label='Email'
-        type='email'
-        {...register('email', { required: 'Campo obligatorio' })}
-        error={errors.email?.message}
-      />
-
-      {/* Sexo */}
-      <div>
+        {/* Email */}
         <FormInput
-          label='Sexo'
-          {...register('sexo')}
-          error={errors.sexo?.message}
+          disabled={!isIncidentSelected}
+          label='Email*'
+          type='email'
+          {...register('email', { required: 'Campo obligatorio' })}
+          error={errors.email?.message}
         />
-      </div>
 
-      {error && <p className='text-sm text-red-500'>{error}</p>}
+        {/* Sexo */}
+        <div>
+          <FormInput
+            disabled={!isIncidentSelected}
+            label='Sexo'
+            {...register('sexo')}
+            error={errors.sexo?.message}
+          />
+        </div>
 
-      <Button type='submit' className='w-full' disabled={isSubmitting}>
-        {isSubmitting ? 'Guardando...' : 'Registrar Víctima'}
-      </Button>
-    </form>
+        <Button
+          type='submit'
+          className='w-full'
+          disabled={isSubmitting || !isIncidentSelected}
+        >
+          {isSubmitting ? 'Guardando...' : 'Registrar Víctima'}
+        </Button>
+      </form>
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={() => setNotification(null)}
+        />
+      )}
+    </>
   )
 }

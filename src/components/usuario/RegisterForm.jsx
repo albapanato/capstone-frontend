@@ -1,11 +1,11 @@
 "use client";
+import { Button } from "@/components/form-components/Button";
+import { FormInput } from "@/components/form-components/FormInput";
+import { createVerificator } from "@/services/verificator";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { createUser } from "../../utils/user"; // Importamos la función de API
-import { FormInput } from "../form-components/FormInput";
-import { Button } from "../form-components/Button";
 
 export default function RegisterForm() {
   const {
@@ -18,62 +18,23 @@ export default function RegisterForm() {
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // // ✅ Si el usuario ya está autenticado, redirigir a la página de validación
-  // useEffect(() => {
-  //   const jwt = localStorage.getItem("jwt");
-  //   if (jwt) {
-  //     router.push("/validacion-usuario");
-  //   }
-  // }, [router]);
-
-  // ✅ Verificar si el usuario ya tiene sesión iniciada
-  useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
-
-    if (jwt) {
-      fetch(`${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/validate-token`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${jwt}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.valid) {
-            router.push("/validacion-usuario");
-          } else {
-            // Si el token es inválido, limpiamos el localStorage y cookies
-            localStorage.removeItem("jwt");
-            document.cookie =
-              "jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-          }
-        })
-        .catch((err) => console.error("❌ Error validando token:", err));
-    }
-  }, [router]);
-
   const onSubmit = async (data) => {
     setError("");
     setIsSubmitting(true);
     try {
-      console.log("Datos enviados al backend:", data);
-      const res = await createUser(data); // Enviamos los datos al backend
-
-      console.log("Respuesta del backend:", res);
-
+      const res = await createVerificator(data);
       if (res.token) {
-        // ✅ Guardar el token en cookies y localStorage
-        document.cookie = `jwt=${res.token}; path=/; max-age=86400`; // Expira en 1 día
+        // Guardar token en cookies de forma segura
+        document.cookie = `jwt=${res.token}; path=/; Secure; HttpOnly; SameSite=Strict; max-age=86400`; // Expira en 1 día
         localStorage.setItem("jwt", res.token);
 
-        // ✅ Redirigir a la validación
-        router.push("/validacion-usuario");
+        // Redirigir a la página principal después del registro
+        router.push("/validacion");
       } else {
-        throw new Error(res.message || "No se pudo registrar el usuario.");
+        throw new Error(res.error || "No se pudo registrar el usuario.");
       }
     } catch (e) {
-      console.error("❌ Error en el registro:", e);
+      console.error("Error en el registro:", e);
       setError(e.message || "No se puede registrar, ha ocurrido un error.");
     } finally {
       setIsSubmitting(false);
@@ -81,56 +42,98 @@ export default function RegisterForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      {/* Nombre */}
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-4 max-w-2xl mx-auto"
+    >
       <FormInput
-        label="Nombre"
-        {...register("name", {
+        label="Entidad"
+        {...register("entidad", {
           required: "Campo obligatorio",
-          minLength: { value: 5, message: "Debe tener al menos 5 caracteres" },
-          maxLength: {
-            value: 20,
-            message: "No puede tener más de 20 caracteres",
-          },
+          maxLength: { value: 300, message: "Máximo 300 caracteres" },
         })}
-        error={errors.name?.message}
+        error={errors.entidad?.message}
       />
-
-      {/* Email */}
-      <FormInput
-        label="Email"
-        type="email"
-        {...register("email", {
-          required: "Campo obligatorio",
-          maxLength: { value: 30, message: "El email es demasiado largo" },
-          pattern: {
-            value: /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/,
-            message: "El formato de email no es válido",
-          },
-        })}
-        error={errors.email?.message}
-      />
-
-      {/* Contraseña */}
-      <FormInput
-        label="Contraseña"
-        type="password"
-        {...register("password", {
-          required: "La contraseña es obligatoria",
-          minLength: { value: 8, message: "Debe tener al menos 8 caracteres" },
-        })}
-        error={errors.password?.message}
-      />
-
-      {/* Mensaje de error */}
-      {error && <p className="text-sm text-red-500">{error}</p>}
-
-      {/* Botón de envío */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <FormInput
+          label="CIF"
+          {...register("cif", {
+            pattern: {
+              value: /^[A-HJNP-SUVW][0-9]{7}[0-9A-J]$/,
+              message: "Formato CIF incorrecto",
+            },
+          })}
+          error={errors.cif?.message}
+        />
+        <FormInput
+          label="DNI"
+          {...register("DNI", {
+            pattern: {
+              value: /^[0-9XYZxyz]{1}[0-9]{7}[A-Za-z]{1}$/,
+              message: "Formato de DNI incorrecto",
+            },
+          })}
+          error={errors.DNI?.message}
+        />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <FormInput
+          label="Nombre"
+          {...register("nombre", { required: "Campo obligatorio" })}
+          error={errors.nombre?.message}
+        />
+        <FormInput
+          label="Apellidos"
+          {...register("apellidos", { required: "Campo obligatorio" })}
+          error={errors.apellidos?.message}
+        />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <FormInput
+          label="Teléfono"
+          {...register("telefono", {
+            pattern: { value: /^[0-9]{9}$/, message: "Teléfono inválido" },
+          })}
+          error={errors.telefono?.message}
+        />
+        <FormInput
+          label="Móvil"
+          {...register("movil", {
+            pattern: { value: /^[0-9]{9}$/, message: "Móvil inválido" },
+          })}
+          error={errors.movil?.message}
+        />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <FormInput
+          label="Email"
+          type="email"
+          {...register("email", {
+            required: "Campo obligatorio",
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: "Correo inválido",
+            },
+          })}
+          error={errors.email?.message}
+        />
+        <FormInput
+          label="Contraseña"
+          type="password"
+          {...register("password", {
+            required: "La contraseña es obligatoria",
+            minLength: {
+              value: 8,
+              message: "Debe tener al menos 8 caracteres",
+            },
+          })}
+          error={errors.password?.message}
+        />
+      </div>
       <Button type="submit" className="w-full" disabled={isSubmitting}>
-        {isSubmitting ? "Cargando..." : "Regístrate"}
+        {isSubmitting ? "Guardando..." : "Registrar organización"}
       </Button>
-
-      {/* Enlace a inicio de sesión */}
+      {error && <p className="text-red-500 text-sm text-center">{error}</p>}
       <p className="text-sm text-center">
         ¿Ya tienes una cuenta?{" "}
         <Link href="/login" className="text-primary hover:underline">

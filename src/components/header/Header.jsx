@@ -12,13 +12,14 @@ import {
 } from '@/constants'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const isValidator = false
 
   return (
-    <header className='bg-black text-white py-4 shadow-md'>
+    <header className='bg-black text-white py-4 shadow-md fixed z-20 w-full'>
       <nav className='max-w-screen-xl mx-auto flex justify-between items-center px-6'>
         {/* Menú en pantallas grandes */}
         <ul className='hidden min-[860px]:flex space-x-6'>
@@ -43,10 +44,7 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <Link
-              href={ADD_DOCUMENTAL_SOURCE_ROUTE}
-              className='hover:underline'
-            >
+            <Link href={ADD_DOCUMENTAL_SOURCE_ROUTE} className='hover:underline'>
               Agregar fuente documental
             </Link>
           </li>
@@ -64,69 +62,48 @@ const Header = () => {
           {menuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
 
-        {/* Menú desplegable */}
-        {menuOpen && (
-          <div className='absolute z-10 top-10 left-0 w-full bg-black text-white shadow-md min-[860px]:hidden'>
-            <ul className='flex flex-col  space-y-4 py-4 px-8'>
+        {/* Menú desplegable con animación */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: menuOpen ? 1 : 0, y: menuOpen ? 0 : -20 }}
+          transition={{ duration: 0.3 }}
+          className={`absolute z-10 top-10 left-0 w-full bg-black text-white shadow-md min-[860px]:hidden ${menuOpen ? 'block' : 'hidden'}`}
+        >
+          <ul className='flex flex-col space-y-4 py-4 px-8'>
+            <li>
+              <Link href={HOME_ROUTE} className='hover:underline' onClick={() => setMenuOpen(false)}>
+                Inicio
+              </Link>
+            </li>
+            <li>
+              <Link href={ADD_INCIDENT_ROUTE} className='hover:underline' onClick={() => setMenuOpen(false)}>
+                Agregar suceso
+              </Link>
+            </li>
+            <li>
+              <Link href={ADD_WITNESS_ROUTE} className='hover:underline' onClick={() => setMenuOpen(false)}>
+                Agregar testigo
+              </Link>
+            </li>
+            <li>
+              <Link href={ADD_VICTIM_ROUTE} className='hover:underline' onClick={() => setMenuOpen(false)}>
+                Agregar víctima
+              </Link>
+            </li>
+            <li>
+              <Link href={ADD_DOCUMENTAL_SOURCE_ROUTE} className='hover:underline' onClick={() => setMenuOpen(false)}>
+                Agregar fuente documental
+              </Link>
+            </li>
+            {isValidator && (
               <li>
-                <Link
-                  href={HOME_ROUTE}
-                  className='hover:underline'
-                  onClick={() => setMenuOpen(false)}
-                >
-                  Inicio
+                <Link href={VALIDATOR_ROUTE} className='hover:underline' onClick={() => setMenuOpen(false)}>
+                  Verificar
                 </Link>
               </li>
-              <li>
-                <Link
-                  href={ADD_INCIDENT_ROUTE}
-                  className='hover:underline'
-                  onClick={() => setMenuOpen(false)}
-                >
-                  Agregar suceso
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={ADD_WITNESS_ROUTE}
-                  className='hover:underline'
-                  onClick={() => setMenuOpen(false)}
-                >
-                  Agregar testigo
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={ADD_VICTIM_ROUTE}
-                  className='hover:underline'
-                  onClick={() => setMenuOpen(false)}
-                >
-                  Agregar víctima
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={ADD_DOCUMENTAL_SOURCE_ROUTE}
-                  className='hover:underline'
-                  onClick={() => setMenuOpen(false)}
-                >
-                  Agregar fuente documental
-                </Link>
-              </li>
-              {isValidator && (
-                <li>
-                  <Link
-                    href={VALIDATOR_ROUTE}
-                    className='hover:underline'
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    Verificar
-                  </Link>
-                </li>
-              )}
-            </ul>
-          </div>
-        )}
+            )}
+          </ul>
+        </motion.div>
 
         <div className='flex align-middle gap-4'>
           {isValidator ? (

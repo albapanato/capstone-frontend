@@ -45,6 +45,10 @@ npm install js-cookie
 ```sh
 npm install --save-dev eslint-config-next eslint-config-prettier eslint-plugin-prettier --legacy-peer-deps
 ```
+#### Instalar Framer Motion
+```sh
+npm install framer-motion
+```
 
 ## Instalación y Configuración
 

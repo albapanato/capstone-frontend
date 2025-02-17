@@ -1,17 +1,15 @@
 import MapComponent from '@/components/location/MapComponent'
 import { incidentsMock } from '@/data/incidents'
+import { getIncident } from '@/services/incidents';
+import { ErrorMessage } from '@/components/error/ErrorMessage';
 
 async function IncidentPage({ params }) {
   const { id } = await params
-  // Get the incident data from the API using the slug
-  // const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/incidents/${params.id}`, {
-  //   method: 'GET',
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   }
-  // });
-  // const incident = await response.json();
-
+  // const response = await getIncident({})
+  // if (!response || !response.data) {
+  //   return <ErrorMessage/>;
+  // }
+  // const incident = response.data;
   const incident = incidentsMock.find(
     (incident) => incident.id === parseInt(id)
   )

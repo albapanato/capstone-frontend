@@ -8,8 +8,8 @@ export default function RootLayout({ children }) {
       {/* Header fijo en la parte superior */}
       {isLoggedIn && <Header />}
 
-      {/* Contenido principal con margen superior para evitar solapamiento */}
-      <div className="flex-grow flex flex-col items-center p-6">
+      {/* Contenido principal */}
+      <div className="flex-grow flex flex-col items-center p-6  mt-16">
         {children}
       </div>
       {/* Footer fijo en la parte inferior */}
