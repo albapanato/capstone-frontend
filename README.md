@@ -102,133 +102,135 @@ module.exports = {
 ## Estructura de Rutas
 
 El proyecto sigue la convención de enrutamiento de Next.js App Router, donde cada carpeta y archivo dentro de `src/app` define una ruta específica de la aplicación.
+### Descripción de Carpetas
 
+- **(auth)/**: Contiene las rutas de autenticación.
+  - `/login`: Página de inicio de sesión.
+  - `/registro`: Página de registro de una organización.
+
+- **(default)/**: Contiene las páginas principales de la aplicación.
+  - `/[id]`: Ruta dinámica basada en un ID.
+  - `/about`: Página de información sobre la aplicación y los desarrolladores.
+  - `/agregar-fuente`: Formulario para agregar una fuentes documentales .
+  - `/agregar-suceso`: Formulario para agregar un nuevo caso.
+  - `/agregar-testigo`: Formulario para agregar un nuevo testigo.
+  - `/agregar-victima`: Formulario para agregar una nueva víctima.
+  - `/validacion`: Página para validaciones una vez la organización está logeada con exito.
+
+- **Otros archivos**:
+  - `layout.jsx`: Define la estructura global de la aplicación.
+  - `page.jsx`: Página principal de la aplicación.
+  - `favicon.ico`: Ícono de la aplicación. // Actualmente el de Next.js, cambiar por logo de gemapp cuando esté creado
+  - `globals.css`: Estilos globales de la aplicación.
+  - 
 ```
-app/
-│── (auth)/               # Rutas de autenticación
-│   │── login/
-│   │   ├── page.jsx      # Página de inicio de sesión (/login)
-│   │── registro/
-│       ├── page.jsx      # Página de registro (/registro)
-│
-│── (default)/            # Rutas generales
-│   │── [id]/
-│   │   ├── page.jsx      # Ruta dinámica para IDs (/id/[id])
-│
-│── about/
-│   ├── page.jsx          # Página de información (/about)
-│
-│── agregar-fuente/
-│   ├── page.jsx          # Página para agregar fuente (/agregar-fuente)
-│
-│── agregar-suceso/
-│   ├── page.jsx          # Página para agregar suceso (/agregar-suceso)
-│
-│── agregar-testigo/
-│   ├── page.jsx          # Página para agregar testigo (/agregar-testigo)
-│
-│── agregar-verificador/
-│   ├── page.jsx          # Página para agregar verificador (/agregar-verificador)
-│
-│── agregar-victima/
-│   ├── page.jsx          # Página para agregar víctima (/agregar-victima)
-│
-│── validacion/
-│   ├── page.js           # Página de validación (/validacion)
-│   ├── layout.jsx        # Layout para la sección de validación
-│
-├── public/               # Archivos estáticos
-├── globals.css           # Estilos globales
-├── layout.js             # Layout principal de la aplicación
+📂 src
+├── 📂 app
+│   ├── 📂 (auth)
+│   │   ├── 📂 login
+│   │   │   ├── 📄 page.jsx
+│   │   ├── 📂 registro
+│   │   │   ├── 📄 page.jsx
+│   │
+│   ├── 📂 (default)
+│   │   ├── 📂 [id]
+│   │   │   ├── 📄 page.jsx
+│   │   ├── 📂 about
+│   │   │   ├── 📄 page.jsx
+│   │   ├── 📂 agregar-fuente
+│   │   │   ├── 📄 page.jsx
+│   │   ├── 📂 agregar-suceso
+│   │   │   ├── 📄 page.jsx
+│   │   ├── 📂 agregar-testigo
+│   │   │   ├── 📄 page.jsx
+│   │   ├── 📂 agregar-victima
+│   │   │   ├── 📄 page.jsx
+│   │   ├── 📂 validacion
+│   │   │   ├── 📄 page.jsx
+│   │
+│   ├── 📄 layout.jsx
+│   ├── 📄 page.jsx
+│   ├── 📄 favicon.ico
+│   ├── 📄 globals.css
 ```
-
-### Explicación de las Rutas
-
-- **Autenticación** `(auth/)`
-  - `/login` → Página de inicio de sesión.
-  - `/registro` → Página de registro de usuarios.
-
-- **Rutas Generales** `(default/)`
-  - `/[id]` → Ruta dinámica que recibe un parámetro `id`.
-
-- **Secciones de la Aplicación**
-  - `/about` → Página de información general.
-  - `/agregar-fuente` → Página para agregar una fuente de información.
-  - `/agregar-suceso` → Página para agregar un suceso.
-  - `/agregar-testigo` → Página para agregar un testigo.
-  - `/agregar-verificador` → Página para agregar un verificador.
-  - `/agregar-victima` → Página para agregar una víctima.
-
-- **Validación**
-  - `/validacion` → Página dedicada a la validación de datos, con un layout específico (`layout.jsx`).
-
 
 ## Estructura de Componentes
+### Descripción de Carpetas
+
+- **error/**: Manejo de errores y mensajes relacionados.
+- **footer/**: Contiene el componente de pie de página.
+- **form-components/**: Componentes reutilizables para formularios como botones, entradas de texto y selectores.
+- **forms/**: Formularios específicos para distintos tipos de datos (incidentes, víctimas, testigos).
+- **header/**: Contiene el encabezado de la aplicación.
+- **location/**: Componentes relacionados con la ubicación y mapas.
+- **usuario/**: Componentes de autenticación y validación de usuario.
+- **validation/**: Componentes para validación de datos y visualización de tablas.
+```
+📂 components
+├── 📂 error
+│   ├── 📄 ErrorMessage.jsx
+│
+├── 📂 footer
+│   ├── 📄 Footer.jsx
+│
+├── 📂 form-components
+│   ├── 📄 Button.jsx
+│   ├── 📄 ButtonInput.jsx
+│   ├── 📄 ButtonLink.jsx
+│   ├── 📄 FormInput.jsx
+│   ├── 📄 IncidentSearcher.jsx
+│   ├── 📄 InitialButtonsBlock.jsx
+│   ├── 📄 Label.jsx
+│   ├── 📄 LoadingSpinner.jsx
+│   ├── 📄 Modal.jsx
+│   ├── 📄 Notification.jsx
+│   ├── 📄 RadioGroup.jsx
+│   ├── 📄 SearchSelect.jsx
+│
+├── 📂 forms
+│   ├── 📄 DocumentSourceForm.jsx
+│   ├── 📄 IncidentForm.jsx
+│   ├── 📄 VictimForm.jsx
+│   ├── 📄 WitnessForm.jsx
+│
+├── 📂 header
+│   ├── 📄 Header.jsx
+│
+├── 📂 location
+│   ├── 📂 map
+│   │   ├── 📄 MapComponent.jsx
+│
+├── 📂 usuario
+│   ├── 📄 LoginForm.jsx
+│   ├── 📄 RegisterForm.jsx
+│   ├── 📄 UserValidator.jsx
+│
+├── 📂 validation
+│   ├── 📄 ActionModal.jsx
+│   ├── 📄 IncidentTable.jsx
+│   ├── 📄 ValidationView.jsx
+```
+
+## Estructura de datos , servicios y utilidades
+### Descripción de Carpetas
+- **data/**: Contiene archivos relacionados con la gestión y almacenamiento de datos de incidentes.
+- **services/**: Implementa la lógica de negocio y validaciones relacionadas con los usuarios, testigos y víctimas.
+- **utils/**: Contiene utilidades generales como clases y constantes reutilizables en la aplicación.
 
 ```
-components/
-│── footer/
-│   ├── Footer.jsx        # Componente de pie de página
-│
-│── form-components/      # Componentes reutilizables de formularios
-│   ├── Button.jsx
-│   ├── ButtonInput.jsx
-│   ├── ButtonLink.jsx
-│   ├── FormInput.jsx
-│   ├── InitialButtonsBlock.jsx
-│   ├── Label.jsx
-│   ├── LoadingSpinner.jsx
-│   ├── Notification.jsx
-│   ├── RadioGroup.jsx
-│   ├── SearchSelect.jsx
-│
-│── forms/                # Formularios específicos
-│   ├── DocumentSource.jsx
-│   ├── IncidentForm.jsx
-│   ├── LocationForm.jsx
-│   ├── VerificatorForm.jsx
-│   ├── VictimForm.jsx
-│   ├── WitnessForm.jsx
-│
-│── header/
-│   ├── Header.jsx        # Componente de cabecera
-│
-│── location/
-│   │── map/
-│   │   ├── MapComponent.jsx   # Componente de mapa
-│
-│── usuario/              # Componentes relacionados con usuario
-│   ├── LoginForm.jsx
-│   ├── RegisterForm.jsx
-│   ├── UserValidator.jsx
-│
-│── validation/           # Componentes de validación
-│   ├── ActionModal.jsx
-│   ├── IncidentTable.jsx
-│   ├── ValidationView.jsx
-│   ├── HandlerData.jsx
-```
-
-## Estructura de Datos y Utilidades
-
-```
-data/                     # Datos de prueba (mocks) simulando respuestas del servidor
-│   ├── all-incidents.js  # Listado de todos los incidentes
-│   ├── incidents.js      # Datos individuales de incidentes
-│
-│── hooks/                # Hooks personalizados
-│   ├── use-handle-cookies-data.js # Hook para manejar cookies
-│
-│── utils/                # Utilidades y APIs de datos
-│   ├── classes.js        # Clases reutilizables
-│   ├── cookies.js        # Funciones para manejo de cookies
-│   ├── documentSourceApi.js # API para fuentes de documentos
-│   ├── incidentApi.js    # API para manejar incidentes
-│   ├── user.js           # Funciones relacionadas con usuario
-│   ├── verificatorApi.js # API para verificadores
-│   ├── victimsApi.js     # API para víctimas
-│   ├── witnessApi.js     # API para testigos
-│   ├── constants.js      # Constantes globales
+📂 data
+├── 📄 all-incidents.js
+├── 📄 incidents.js
+📂 services
+├── 📄 documentSources.js
+├── 📄 incidents.js
+├── 📄 user.js
+├── 📄 validators.js
+├── 📄 victims.js
+├── 📄 witnesses.js
+📂 utils
+├── 📄 classes.js
+├── 📄 constants.js
 ```
 
 
@@ -280,6 +282,8 @@ El archivo `package.json` contiene los scripts de ejecución y dependencias clav
 ## Notas Finales
 
 - Este proyecto sigue la estructura del **App Router** de Next.js.
+- **(auth)/**: Contiene las rutas de autenticación.
+- **(default)/**: Contiene las páginas principales de la aplicación.
 - Se utilizan layouts (`layout.js`, `layout.jsx`) para definir estructuras de página reutilizables.
 - Los archivos en `public/` son recursos estáticos accesibles desde el navegador.
 - Los componentes están organizados en `components/` para facilitar la reutilización y modularidad del código.
