@@ -2,6 +2,7 @@
 // es necesrio poner "use server " porque si no,  el fichero que lo llama al ser "use client" por default renderizara la funcion en el lado del cliente
 
 export async function createVerificator(data) {
+  console.log(data);
   try {
     if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
       throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
@@ -11,7 +12,17 @@ export async function createVerificator(data) {
     const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        entidad: data.entidad,
+        cif: data.cif,
+        DNI: data.DNI,
+        nombre: data.nombre,
+        apellidos: data.apellidos,
+        telefono: data.telefono,
+        movil: data.movil,
+        email: data.email,
+        password: data.password,
+      }),
     });
 
     let responseData;
@@ -26,7 +37,6 @@ export async function createVerificator(data) {
     if (!response.ok) {
       throw new Error(responseData.message || "Error al registrar usuario");
     }
-
     return responseData; // Retorna la respuesta del servidor
   } catch (error) {
     console.error("Error al registrar usuario:", error);
@@ -35,6 +45,7 @@ export async function createVerificator(data) {
 }
 
 export async function loginVerificator(data) {
+  console.log(data);
   try {
     if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
       throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
@@ -44,7 +55,10 @@ export async function loginVerificator(data) {
     const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        email: data.email,
+        password: data.password,
+      }),
     });
 
     let responseData;

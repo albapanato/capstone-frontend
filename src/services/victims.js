@@ -1,15 +1,25 @@
 export async function createVictim(data) {
   try {
+    console.log(data);
     if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
       throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
     }
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/victimas`; // REVISA API
+    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/victimas`; // REVISA API
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        estado: data.estado,
+        nombre: data.nombre,
+        apellidos: data.apellidos,
+        DNI: data.DNI,
+        telefono: data.telefono,
+        movil: data.movil,
+        email: data.email,
+        sexo: data.sexo,
+      }),
     });
 
     if (!response?.ok) {

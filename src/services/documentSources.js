@@ -1,4 +1,5 @@
 export async function createDocumentSource(data) {
+  console.log(data);
   try {
     if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
       throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
@@ -7,7 +8,12 @@ export async function createDocumentSource(data) {
     const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        descripcion_medio: data.descripcion_medio,
+        autor_medio: data.autor_medio,
+        fecha_publicacion: data.fecha_publicacion,
+        url: data.url,
+      }),
     });
 
     if (!response?.ok) {

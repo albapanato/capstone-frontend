@@ -58,7 +58,7 @@ export default function LoginForm() {
           type="email"
           {...register("email", {
             required: "El email es obligatorio",
-            maxLength: { value: 30, message: "El email es demasiado largo" },
+            maxLength: { value: 60, message: "El email es demasiado largo" },
             pattern: {
               value: /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/,
               message: "El formato del email no es válido",
