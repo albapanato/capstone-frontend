@@ -23,20 +23,7 @@ export async function createVerificator(data) {
         password: data.password,
       }),
     });
-
-    let responseData;
-    try {
-      responseData = await response.json();
-    } catch (error) {
-      throw new Error(
-        "Error en la respuesta del servidor. No es un JSON válido."
-      );
-    }
-
-    if (!response.ok) {
-      throw new Error(responseData.message || "Error al registrar usuario");
-    }
-    return responseData; // Retorna la respuesta del servidor
+    return await response.json();
   } catch (error) {
     console.error("Error al registrar usuario:", error);
     return { error: error.message };
@@ -58,23 +45,9 @@ export async function loginVerificator(data) {
         password: data.password,
       }),
     });
-
-    let responseData;
-    try {
-      responseData = await response.json();
-    } catch (error) {
-      throw new Error(
-        "Error en la respuesta del servidor. No es un JSON válido."
-      );
-    }
-
-    if (!response.ok) {
-      throw new Error(responseData.message || "Error al iniciar sesión");
-    }
-
-    return responseData; // Retorna la respuesta del servidor
+    const responseData = await response.json();
+    return responseData;
   } catch (error) {
-    console.error("Error en loginVerificator:", error);
     return { error: error.message };
   }
 }
