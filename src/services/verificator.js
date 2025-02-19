@@ -2,7 +2,6 @@
 // es necesrio poner "use server " porque si no,  el fichero que lo llama al ser "use client" por default renderizara la funcion en el lado del cliente
 
 export async function createVerificator(data) {
-  console.log(data);
   try {
     if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
       throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
@@ -45,7 +44,6 @@ export async function createVerificator(data) {
 }
 
 export async function loginVerificator(data) {
-  console.log(data);
   try {
     if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
       throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
