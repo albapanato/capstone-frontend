@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/form-components/Button";
 import { FormInput } from "@/components/form-components/FormInput";
-import Notification from "@/components/form-components/Notification";
+import { Notification } from "@/components/form-components/Notification";
 import { loginVerificator } from "@/services/verificator"; // Importamos la función de API
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -42,7 +42,6 @@ export default function LoginForm() {
       // ✅ Redirigir al usuario autenticado
       router.push("/validacion");
     } catch (err) {
-      console.error("Error en el login:", err);
       setError(err.message);
     } finally {
       setIsSubmitting(false);

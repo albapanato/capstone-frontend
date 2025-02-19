@@ -9,31 +9,25 @@ export async function getIncident(id) {
       throw new Error("Error al obtener los datos del caso");
     }
     return await response.json();
-  } catch (e) {
-    console.error(e);
-  }
+  } catch {}
 }
 
-export async function getIncidents({ getAll = false }) {
+export async function getIncidents() {
   try {
     if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
       throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
     }
-
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/casos${getAll ? "/all" : ""}`;
+    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/casos/all`;
     const response = await fetch(url);
-    if (!response.ok) {
+    if (!response) {
       throw new Error("Error al obtener los datos de los casos");
     }
     return await response.json();
-  } catch (e) {
-    console.error(e);
-  }
+  } catch {}
 }
 
 export async function createIncident(data) {
   try {
-    console.log(data);
     if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
       throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
     }
@@ -55,7 +49,6 @@ export async function createIncident(data) {
         coordenadas: `${data.coordinates.lat},${data.coordinates.lng}`,
       }),
     });
-
     if (!response.ok) {
       throw new Error("Error al enviar los datos del caso");
     }

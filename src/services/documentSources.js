@@ -1,5 +1,4 @@
 export async function createDocumentSource(data) {
-  console.log(data);
   try {
     if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
       throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");

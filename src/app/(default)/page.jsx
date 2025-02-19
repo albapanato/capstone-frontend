@@ -1,16 +1,14 @@
-import { ErrorMessage } from '@/components/error/ErrorMessage';
-import MapComponent from '@/components/location/MapComponent';
-import { incidentsMock } from '@/data/incidents';
-import { getIncidents } from '@/services/incidents';
-import Link from 'next/link';
+import { ErrorMessage } from "@/components/error/ErrorMessage";
+import MapComponent from "@/components/location/MapComponent";
+import { getIncidents } from "@/services/incidents";
+import Link from "next/link";
 
 export default async function HomePage() {
-  // const response = await getIncidents({})
-  // if (!response || !response.data) {
-  //   return <ErrorMessage/>;
-  // }
-  // const incidents = response.data;
-  const incidents = incidentsMock
+  const response = await getIncidents();
+  if (!response) {
+    return <ErrorMessage />;
+  }
+  const incidents = response;
 
   return (
     <div className="flex flex-col gap-11 text-center">
@@ -21,13 +19,20 @@ export default async function HomePage() {
         Una plataforma segura para reportar sucesos y ayudar a la comunidad
       </p>
 
-      <MapComponent showPosition={false} locations={incidents.map((location) => ({
-        popupContent: <div>
-          <h3>{location.nombre}</h3>
-          <Link href={location.id.toString()}>Ver más información</Link>
-        </div>,
-        position: Object.values(location.coordenadas),
-      }))} />
+      <MapComponent
+        showPosition={false}
+        locations={incidents.map((location) => ({
+          popupContent: (
+            <div>
+              <h3>{location.nombre_caso}</h3>
+              <Link href={location.id_caso.toString()}>
+                Ver más información
+              </Link>
+            </div>
+          ),
+          position: Object.values(location.coordenadas.split(",")),
+        }))}
+      />
     </div>
   );
 }

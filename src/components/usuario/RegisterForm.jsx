@@ -34,7 +34,6 @@ export default function RegisterForm() {
         throw new Error(res.error || "No se pudo registrar el usuario.");
       }
     } catch (e) {
-      console.error("Error en el registro:", e);
       setError(e.message || "No se puede registrar, ha ocurrido un error.");
     } finally {
       setIsSubmitting(false);

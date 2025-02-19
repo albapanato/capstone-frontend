@@ -1,6 +1,5 @@
 export async function createVictim(data) {
   try {
-    console.log(data);
     if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
       throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
     }
