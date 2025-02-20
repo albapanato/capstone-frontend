@@ -20,7 +20,7 @@ export async function createVerificator(data) {
         telefono: data.telefono,
         movil: data.movil,
         email: data.email,
-        password: data.password,
+        contraseña: data.password,
       }),
     });
     return await response.json();
