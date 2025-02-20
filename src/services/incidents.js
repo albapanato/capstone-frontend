@@ -27,6 +27,7 @@ export async function getIncidents() {
 }
 
 export async function createIncident(data) {
+  // funciona
   console.log("---- datos en incident.js");
   try {
     if (!process.env.NEXT_PUBLIC_BACKEND_URL) {

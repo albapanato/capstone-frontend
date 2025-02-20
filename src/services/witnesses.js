@@ -16,6 +16,7 @@ export async function createWitness(data) {
         telefono: data.telefono,
         movil: data.movil,
         sexo: data.sexo,
+        parentesco: data.parentesco,
         email: data.email,
         declaracion: data.declaracion,
       }),

@@ -52,6 +52,34 @@ export async function loginVerificator(data) {
   }
 }
 
+export async function actualizarVerificator(id, data) {
+  try {
+    if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
+      throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
+    }
+
+    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/actualizar/${id}`;
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        entidad: data.entidad,
+        cif: data.cif,
+        DNI: data.DNI,
+        nombre: data.nombre,
+        apellidos: data.apellidos,
+        movil: data.movil,
+        email: data.email,
+      }),
+    });
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error al actualizar verificador:", error);
+    return { error: error.message };
+  }
+}
+
 // export async function validateProcess(data) {
 //   try {
 //     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/validate`; // Ruta por definir si se quiere usar esto en un futuro
