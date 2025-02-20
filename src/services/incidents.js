@@ -27,6 +27,7 @@ export async function getIncidents() {
 }
 
 export async function createIncident(data) {
+  console.log("---- datos en incident.js");
   try {
     if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
       throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
@@ -40,13 +41,13 @@ export async function createIncident(data) {
         fecha: data.date,
         hora: data.time,
         descripcion_caso: data.description,
-        nombre_lugar: data.locationName,
-        descripcion_lugar: data.locationDescription,
+        nombre_ubicacion: data.locationName,
+        coordenadas: `${data.coordinates.lat},${data.coordinates.lng}`,
+        descripcion_coordenadas: data.locationDescription,
         valoracion_daños: data.valoration,
         testigos: data.hasWitnesses,
         victimas: data.hasVictims,
         fuentes_documentales: data.hasDocumentalSources,
-        coordenadas: `${data.coordinates.lat},${data.coordinates.lng}`,
       }),
     });
     if (!response.ok) {
