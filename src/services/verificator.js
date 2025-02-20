@@ -7,7 +7,7 @@ export async function createVerificator(data) {
       throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
     }
 
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/verificadores`;
+    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/registro`;
     const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -20,7 +20,7 @@ export async function createVerificator(data) {
         telefono: data.telefono,
         movil: data.movil,
         email: data.email,
-        contraseña: data.password,
+        contraseña: data.contraseña,
       }),
     });
     return await response.json();

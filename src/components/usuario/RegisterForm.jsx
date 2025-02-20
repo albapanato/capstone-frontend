@@ -23,13 +23,17 @@ export default function RegisterForm() {
     setIsSubmitting(true);
     try {
       const res = await createVerificator(data);
+      console.log("entraaa");
+      console.log("---res-->", res);
+      console.log("---res.token-->", res.token);
       if (res.token) {
         // Guardar token en cookies de forma segura
         document.cookie = `jwt=${res.token}; path=/; Secure; HttpOnly; SameSite=Strict; max-age=86400`; // Expira en 1 día
         localStorage.setItem("jwt", res.token);
-
+        console.log("antes /validacion");
         // Redirigir a la página principal después del registro
         router.push("/validacion");
+        console.log("despues /validacion");
       } else {
         throw new Error(res.error || "No se pudo registrar el usuario.");
       }
@@ -119,7 +123,7 @@ export default function RegisterForm() {
         <FormInput
           label="Contraseña"
           type="password"
-          {...register("password", {
+          {...register("contraseña", {
             required: "La contraseña es obligatoria",
             minLength: {
               value: 8,
