@@ -1,5 +1,5 @@
 import { Button } from "../form-components/Button";
-
+import { updateIncident } from "@/services/incidents"; // AGREGAR AL MODAL LA OPCION DE MODIFICAR, COGER ID CON selectedIncident.id
 const ActionModal = ({
   selectedIncident,
   validateIncident,

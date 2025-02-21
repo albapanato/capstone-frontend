@@ -1,13 +1,14 @@
 // Metodo GET preparado,---> por testear desde el front
 
 export async function getIncidents() {
+  // funciona
   try {
     if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
       throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
     }
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/casos/all`;
     const response = await fetch(url);
-    console.log("getIncidents()--->", response);
+
     if (!response) {
       throw new Error("Error al obtener los datos de los casos");
     }
@@ -17,7 +18,7 @@ export async function getIncidents() {
 
 // Metodo GET preparado,---> por testear desde el front
 
-export async function getIncident(id) {
+export async function getOneIncident(id) {
   try {
     if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
       throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
@@ -33,7 +34,7 @@ export async function getIncident(id) {
 
 // Metodo GET preparado,---> por testear desde el front
 
-export async function getIncidentVerified(id) {
+export async function getIncidentVerified() {
   try {
     if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
       throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
@@ -49,7 +50,7 @@ export async function getIncidentVerified(id) {
 
 // Metodo GET preparado,---> por testear desde el front
 
-export async function getIncidentNoVerified(id) {
+export async function getIncidentNoVerified() {
   try {
     if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
       throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
@@ -65,12 +66,12 @@ export async function getIncidentNoVerified(id) {
 
 // Metodo GET preparado,---> por testear desde el front
 
-export async function getOwnIncidentVerified(id) {
+export async function getOwnIncidentVerified(id_verificator) {
   try {
     if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
       throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
     }
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/casos/mis-casos-verificados/${id}`;
+    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/casos/mis-verificados/${id_verificator}`;
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error("Error al obtener los datos del caso");
@@ -81,7 +82,7 @@ export async function getOwnIncidentVerified(id) {
 
 export async function createIncident(data) {
   // funciona
-  console.log("---- datos en incident.js");
+
   try {
     if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
       throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
@@ -142,6 +143,36 @@ export async function updateIncident(id, data) {
       throw new Error("Error al actualizar los datos del caso");
     }
     return await response.json();
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+export async function validateIncident(id, data) {
+  try {
+    if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
+      throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
+    }
+    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/casos/validar/${id}`;
+    const responseJson = await fetch(url, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        validar: data.validar,
+        fk_verificador: data.fk_verificador,
+      }),
+    });
+    const response = await responseJson.json();
+    if (!response.ok) {
+      return {
+        ok: false,
+        message:
+          response.status === 403
+            ? "No estás autorizado. Inicia sesión"
+            : "Error al modificar validacion del caso",
+      };
+    }
+    return response;
   } catch (e) {
     console.error(e);
   }

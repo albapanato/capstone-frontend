@@ -2,11 +2,12 @@
 import { Button } from "@/components/form-components/Button";
 import { FormInput } from "@/components/form-components/FormInput";
 import { Notification } from "@/components/form-components/Notification";
-import { loginVerificator } from "@/services/verificator"; // Importamos la función de API
+import { loginVerificator } from "@/services/auth"; // Importamos la función de API
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { persistDataInCookies } from "@/utils/cookies";
 
 export default function LoginForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,12 +36,13 @@ export default function LoginForm() {
         throw new Error("No tienes autorización para entrar.");
       }
 
-      // ✅ Guardar el token en cookies y localStorage
-      document.cookie = `jwt=${res.token}; path=/; max-age=86400`; // Expira en 1 día
-      localStorage.setItem("jwt", res.token);
-
-      // ✅ Redirigir al usuario autenticado
-      router.push("/validacion");
+      if (res.token && res.id) {
+        persistDataInCookies("token", res.token);
+        persistDataInCookies("id", res.id);
+        router.push("/validacion");
+      } else {
+        throw new Error(res.error || "No se pudo registrar el usuario.");
+      }
     } catch (err) {
       setError(err.message);
     } finally {

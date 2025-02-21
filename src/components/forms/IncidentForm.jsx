@@ -52,7 +52,6 @@ export default function IncidentForm() {
   };
 
   const onSubmit = async (data) => {
-    console.log("---datos en IncidentForm.jsx---", data);
     if (!verifyLocation()) return;
     setIsSubmitting(true);
     try {
