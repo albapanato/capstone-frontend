@@ -135,15 +135,6 @@ export default function VictimForm({ onComplete, incidentId }) {
           />
         </div>
 
-        <div>
-          <FormInput
-            disabled={!isIncidentSelected}
-            label="parentesco"
-            {...register("parentesco")}
-            error={errors.parentesco?.message}
-          />
-        </div>
-
         <Button
           type="submit"
           className="w-full"

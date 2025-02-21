@@ -12,13 +12,13 @@ export async function createVictim(data) {
       },
       body: JSON.stringify({
         estado: data.estado,
-        nombre: data.nombre,
         apellidos: data.apellidos,
+        nombre: data.nombre,
         DNI: data.DNI,
+        sexo: data.sexo,
         telefono: data.telefono,
         movil: data.movil,
         email: data.email,
-        sexo: data.sexo,
       }),
     });
 
