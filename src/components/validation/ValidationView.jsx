@@ -43,7 +43,7 @@ const ValidationView = () => {
             return acc;
           }
           acc[STATUS_TABS.validated].push(incident);
-          if (incident.fk_verificador.toString() === ownId.toString()) {
+          if (incident.fk_verificador.toString() === ownId?.toString()) {
             acc[STATUS_TABS.own].push(incident);
           }
           return acc;
@@ -145,10 +145,10 @@ const ValidationView = () => {
       {isLoading && <LoadingSpinner fullView />}
       {!!incidents && (
         <div>
-          <div className="flex gap-4">
+          <div className="flex justify-center gap-4 flex-wrap lg:flex-nowrap">
             <Button
               variant={activeTab === STATUS_TABS.all ? "default" : "outline"}
-              className="w-full"
+              className="lg:w-full"
               onClick={() => setActiveTab(STATUS_TABS.all)}
             >
               Todos los suceso ({incidents.all.length})
@@ -157,7 +157,7 @@ const ValidationView = () => {
               variant={
                 activeTab === STATUS_TABS.pending ? "default" : "outline"
               }
-              className="w-full"
+              className="lg:w-full"
               onClick={() => setActiveTab(STATUS_TABS.pending)}
             >
               Pendientes ({incidents.pending.length})
@@ -166,14 +166,14 @@ const ValidationView = () => {
               variant={
                 activeTab === STATUS_TABS.validated ? "default" : "outline"
               }
-              className="w-full"
+              className="lg:w-full"
               onClick={() => setActiveTab(STATUS_TABS.validated)}
             >
               Validados ({incidents.validated.length})
             </Button>
             <Button
               variant={activeTab === STATUS_TABS.own ? "default" : "outline"}
-              className="w-full"
+              className="lg:w-full"
               onClick={() => setActiveTab(STATUS_TABS.own)}
             >
               Mis suceso validados ({incidents.own.length})

@@ -7,22 +7,20 @@ function IncidentTable({ setSelectedIncident, currentIncidents }) {
       <table className="w-full border border-gray-300  rounded-md">
         <thead className="bg-black text-white">
           <tr>
-            <th className="p-2 text-justify">ID</th>
-            <th className="p-2 text-justify">Suceso</th>
+            <th className="p-2">Suceso</th>
             <th className="p-2 text-justify">Fecha</th>
             <th className="p-2 text-justify">Hora</th>
-            <th className="p-2 text-justify">Acciones</th>
+            <th className="p-2 ">Acciones</th>
           </tr>
         </thead>
         <tbody>
           {currentIncidents.length > 0 ? (
             currentIncidents.map((caso) => (
               <tr key={caso.id_caso} className="border-b">
-                <td className="p-2">{caso.id_caso}</td>
-                <td className="p-2">{caso.nombre_caso}</td>
+                <td className="p-2 ">{caso.nombre_caso}</td>
                 <td className="p-2">{formatDate(caso.fecha)}</td>
                 <td className="p-2">{formatTime(caso.hora) || "N/A"}</td>
-                <td className="p-2">
+                <td className="p-2 flex justify-center">
                   <Button
                     variant="outline"
                     onClick={() => setSelectedIncident(caso)}
