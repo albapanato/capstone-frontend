@@ -1,14 +1,15 @@
 "use client";
 import { Button } from "@/components/form-components/Button";
 import { FormInput } from "@/components/form-components/FormInput";
+import LoadingSpinner from "@/components/form-components/LoadingSpinner";
 import { Notification } from "@/components/form-components/Notification";
+import { REGISTER_ROUTE, VALIDATOR_ROUTE } from "@/constants";
 import { loginVerificator } from "@/services/auth"; // Importamos la función de API
+import { persistDataInCookies } from "@/utils/cookies";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { persistDataInCookies } from "@/utils/cookies";
-import { REGISTER_ROUTE, VALIDATOR_ROUTE } from "@/constants";
 
 export default function LoginForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -53,6 +54,7 @@ export default function LoginForm() {
 
   return (
     <>
+      {isSubmitting && <LoadingSpinner fullView />}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* Email */}
         <FormInput

@@ -1,7 +1,9 @@
 "use client";
+
 import { Button } from "@/components/form-components/Button";
 import { FormInput } from "@/components/form-components/FormInput";
 import { IncidentSearcher } from "@/components/form-components/IncidentSearcher";
+import LoadingSpinner from "@/components/form-components/LoadingSpinner";
 import { Notification } from "@/components/form-components/Notification";
 import { HOME_ROUTE } from "@/constants";
 import { createDocumentSource } from "@/services/documentSources";
@@ -57,6 +59,7 @@ export default function DocumentSourceForm({ onComplete, incidentId }) {
 
   return (
     <>
+      {isSubmitting && <LoadingSpinner fullView />}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="space-y-6 max-w-3xl mx-auto"

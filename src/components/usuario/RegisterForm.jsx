@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/form-components/Button";
 import { FormInput } from "@/components/form-components/FormInput";
+import LoadingSpinner from "@/components/form-components/LoadingSpinner";
 import {
   ID_COOKIES_KEY,
   LOGIN_ROUTE,
@@ -46,105 +47,108 @@ export default function RegisterForm() {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="space-y-4 max-w-2xl mx-auto"
-    >
-      <FormInput
-        label="Entidad*"
-        {...register("entidad", {
-          required: "Campo obligatorio",
-          maxLength: { value: 300, message: "Máximo 300 caracteres" },
-        })}
-        error={errors.entidad?.message}
-      />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <>
+      {isSubmitting && <LoadingSpinner fullView />}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="space-y-4 max-w-2xl mx-auto"
+      >
         <FormInput
-          label="CIF"
-          {...register("cif", {
-            pattern: {
-              value: /^[A-HJNP-SUVW][0-9]{7}[0-9A-J]$/,
-              message: "Formato CIF incorrecto",
-            },
-          })}
-          error={errors.cif?.message}
-        />
-        <FormInput
-          label="DNI*"
-          {...register("DNI", {
-            pattern: {
-              value: /^[0-9XYZxyz]{1}[0-9]{7}[A-Za-z]{1}$/,
-              message: "Formato de DNI incorrecto",
-            },
+          label="Entidad*"
+          {...register("entidad", {
             required: "Campo obligatorio",
+            maxLength: { value: 300, message: "Máximo 300 caracteres" },
           })}
-          error={errors.DNI?.message}
+          error={errors.entidad?.message}
         />
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <FormInput
-          label="Nombre*"
-          {...register("nombre", { required: "Campo obligatorio" })}
-          error={errors.nombre?.message}
-        />
-        <FormInput
-          label="Apellidos*"
-          {...register("apellidos", { required: "Campo obligatorio" })}
-          error={errors.apellidos?.message}
-        />
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <FormInput
-          label="Teléfono"
-          {...register("telefono", {
-            pattern: { value: /^[0-9]{9}$/, message: "Teléfono inválido" },
-          })}
-          error={errors.telefono?.message}
-        />
-        <FormInput
-          label="Móvil"
-          {...register("movil", {
-            pattern: { value: /^[0-9]{9}$/, message: "Móvil inválido" },
-          })}
-          error={errors.movil?.message}
-        />
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <FormInput
-          label="Email*"
-          type="email"
-          {...register("email", {
-            required: "Campo obligatorio",
-            pattern: {
-              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-              message: "Correo inválido",
-            },
-          })}
-          error={errors.email?.message}
-        />
-        <FormInput
-          label="Contraseña*"
-          type="password"
-          {...register("contraseña", {
-            required: "La contraseña es obligatoria",
-            minLength: {
-              value: 8,
-              message: "Debe tener al menos 8 caracteres",
-            },
-          })}
-          error={errors.contraseña?.message}
-        />
-      </div>
-      <Button type="submit" className="w-full" disabled={isSubmitting}>
-        {isSubmitting ? "Guardando..." : "Registrar organización"}
-      </Button>
-      {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-      <p className="text-sm text-center">
-        ¿Ya tienes una cuenta?{" "}
-        <Link href={LOGIN_ROUTE} className="text-primary hover:underline">
-          Inicia sesión
-        </Link>
-      </p>
-    </form>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormInput
+            label="CIF"
+            {...register("cif", {
+              pattern: {
+                value: /^[A-HJNP-SUVW][0-9]{7}[0-9A-J]$/,
+                message: "Formato CIF incorrecto",
+              },
+            })}
+            error={errors.cif?.message}
+          />
+          <FormInput
+            label="DNI*"
+            {...register("DNI", {
+              pattern: {
+                value: /^[0-9XYZxyz]{1}[0-9]{7}[A-Za-z]{1}$/,
+                message: "Formato de DNI incorrecto",
+              },
+              required: "Campo obligatorio",
+            })}
+            error={errors.DNI?.message}
+          />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormInput
+            label="Nombre*"
+            {...register("nombre", { required: "Campo obligatorio" })}
+            error={errors.nombre?.message}
+          />
+          <FormInput
+            label="Apellidos*"
+            {...register("apellidos", { required: "Campo obligatorio" })}
+            error={errors.apellidos?.message}
+          />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormInput
+            label="Teléfono"
+            {...register("telefono", {
+              pattern: { value: /^[0-9]{9}$/, message: "Teléfono inválido" },
+            })}
+            error={errors.telefono?.message}
+          />
+          <FormInput
+            label="Móvil"
+            {...register("movil", {
+              pattern: { value: /^[0-9]{9}$/, message: "Móvil inválido" },
+            })}
+            error={errors.movil?.message}
+          />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormInput
+            label="Email*"
+            type="email"
+            {...register("email", {
+              required: "Campo obligatorio",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Correo inválido",
+              },
+            })}
+            error={errors.email?.message}
+          />
+          <FormInput
+            label="Contraseña*"
+            type="password"
+            {...register("contraseña", {
+              required: "La contraseña es obligatoria",
+              minLength: {
+                value: 8,
+                message: "Debe tener al menos 8 caracteres",
+              },
+            })}
+            error={errors.contraseña?.message}
+          />
+        </div>
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
+          {isSubmitting ? "Guardando..." : "Registrar organización"}
+        </Button>
+        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+        <p className="text-sm text-center">
+          ¿Ya tienes una cuenta?{" "}
+          <Link href={LOGIN_ROUTE} className="text-primary hover:underline">
+            Inicia sesión
+          </Link>
+        </p>
+      </form>
+    </>
   );
 }

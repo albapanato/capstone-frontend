@@ -2,6 +2,7 @@
 import { Button } from "@/components/form-components/Button";
 import { FormInput } from "@/components/form-components/FormInput";
 import { Label } from "@/components/form-components/Label";
+import LoadingSpinner from "@/components/form-components/LoadingSpinner";
 import { Notification } from "@/components/form-components/Notification";
 import {
   RadioGroup,
@@ -108,6 +109,7 @@ export default function IncidentForm() {
 
   return (
     <>
+      {isSubmitting && <LoadingSpinner fullView />}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="space-y-6 max-w-3xl mx-auto"

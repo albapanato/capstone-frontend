@@ -3,6 +3,7 @@ import { Button } from "@/components/form-components/Button";
 import { FormInput } from "@/components/form-components/FormInput";
 import { IncidentSearcher } from "@/components/form-components/IncidentSearcher";
 import { Label } from "@/components/form-components/Label";
+import LoadingSpinner from "@/components/form-components/LoadingSpinner";
 import { Notification } from "@/components/form-components/Notification";
 import {
   RadioGroup,
@@ -61,6 +62,7 @@ export default function WitnessForm({ onComplete, incidentId }) {
 
   return (
     <>
+      {isSubmitting && <LoadingSpinner fullView />}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="space-y-6 max-w-3xl mx-auto"
@@ -145,7 +147,7 @@ export default function WitnessForm({ onComplete, incidentId }) {
 
         {/* Sexo */}
         <div>
-          <Label>Sexo</Label>
+          <Label>Sexo*</Label>
           <RadioGroup
             error={errors.sexo?.message}
             className="flex gap-4 mt-1"
