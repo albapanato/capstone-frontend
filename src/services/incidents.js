@@ -31,7 +31,7 @@ export async function getOneIncident(id) {
 export async function getIncidentsVerified() {
   try {
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/casos/verificados`;
-    const response = await fetch(url);
+    const response = await fetch(url, { cache: "no-store" });
     if (!response?.ok) {
       throw new Error("Error al obtener los datos del caso");
     }
