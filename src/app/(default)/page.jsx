@@ -9,6 +9,7 @@ export default async function HomePage() {
     return <ErrorMessage />;
   }
   const incidents = response;
+  console.log("🚀 ~ HomePage ~ incidents:", incidents);
 
   return (
     <div className="flex flex-col gap-11 text-center">
