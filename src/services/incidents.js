@@ -25,7 +25,7 @@ export async function getOneIncident(id) {
     }
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/casos/${id}`;
     const response = await fetch(url);
-    if (!response.ok) {
+    if (!response?.ok) {
       throw new Error("Error al obtener los datos del caso");
     }
     return await response.json();
@@ -41,7 +41,7 @@ export async function getIncidentVerified() {
     }
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/casos/verificados`;
     const response = await fetch(url);
-    if (!response.ok) {
+    if (!response?.ok) {
       throw new Error("Error al obtener los datos del caso");
     }
     return await response.json();
@@ -57,7 +57,7 @@ export async function getIncidentNoVerified() {
     }
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/casos/no-verificados`;
     const response = await fetch(url);
-    if (!response.ok) {
+    if (!response?.ok) {
       throw new Error("Error al obtener los datos del caso");
     }
     return await response.json();
@@ -73,7 +73,7 @@ export async function getOwnIncidentVerified(id_verificator) {
     }
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/casos/mis-verificados/${id_verificator}`;
     const response = await fetch(url);
-    if (!response.ok) {
+    if (!response?.ok) {
       throw new Error("Error al obtener los datos del caso");
     }
     return await response.json();
@@ -105,7 +105,7 @@ export async function createIncident(data) {
         fuentes_documentales: data.hasDocumentalSources,
       }),
     });
-    if (!response.ok) {
+    if (!response?.ok) {
       throw new Error("Error al enviar los datos del caso");
     }
     return await response.json();
@@ -139,7 +139,7 @@ export async function updateIncident(id, data) {
         fuentes_documentales: data.hasDocumentalSources,
       }),
     });
-    if (!response.ok) {
+    if (!response?.ok) {
       throw new Error("Error al actualizar los datos del caso");
     }
     return await response.json();
@@ -163,7 +163,7 @@ export async function validateIncident(id, data) {
       }),
     });
     const response = await responseJson.json();
-    if (!response.ok) {
+    if (!response?.ok) {
       return {
         ok: false,
         message:

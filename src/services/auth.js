@@ -91,7 +91,7 @@ export async function actualizarVerificator(id, data) {
 //       body: JSON.stringify(data),
 //     });
 
-//     if (!response.ok) {
+//     if (!response?.ok) {
 //       throw new Error("Código de validación incorrecto o expirado.");
 //     }
 

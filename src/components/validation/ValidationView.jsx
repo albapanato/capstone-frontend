@@ -53,7 +53,7 @@ const ValidationView = ({
       validar: true,
       fk_verificador: idVerificador,
     });
-    if (!response.ok) {
+    if (!response?.ok) {
       setNotification({
         message: response.message,
         type: "error",
@@ -74,7 +74,7 @@ const ValidationView = ({
       validar: false,
       fk_verificador: idVerificador,
     });
-    if (!response.ok) {
+    if (!response?.ok) {
       setNotification({
         message: response.message,
         type: "error",
