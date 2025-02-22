@@ -9,7 +9,7 @@ export default function RootLayout({ children }) {
       {isLoggedIn && <Header />}
 
       {/* Contenido principal */}
-      <div className="flex-grow flex flex-col items-center p-6  mt-16">
+      <div className="flex-grow flex flex-col items-center p-6  mt-12">
         {children}
       </div>
       {/* Footer fijo en la parte inferior */}
