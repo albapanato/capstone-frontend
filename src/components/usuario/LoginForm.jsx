@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { persistDataInCookies } from "@/utils/cookies";
+import { REGISTER_ROUTE, VALIDATOR_ROUTE } from "@/constants";
 
 export default function LoginForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -39,7 +40,7 @@ export default function LoginForm() {
       if (res.token && res.id) {
         persistDataInCookies("token", res.token);
         persistDataInCookies("id", res.id);
-        router.push("/validacion");
+        router.push(VALIDATOR_ROUTE);
       } else {
         throw new Error(res.error || "No se pudo registrar el usuario.");
       }
@@ -93,7 +94,7 @@ export default function LoginForm() {
         {/* Enlace a registro */}
         <p className="text-sm text-center">
           ¿No tienes cuenta?{" "}
-          <Link href="/registro" className="text-primary hover:underline">
+          <Link href={REGISTER_ROUTE} className="text-primary hover:underline">
             Regístrate
           </Link>
         </p>

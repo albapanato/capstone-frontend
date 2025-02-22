@@ -1,7 +1,12 @@
 "use client";
 import { Button } from "@/components/form-components/Button";
 import { FormInput } from "@/components/form-components/FormInput";
-import { ID_COOKIES_KEY, TOKEN_COOKIES_KEY } from "@/constants";
+import {
+  ID_COOKIES_KEY,
+  LOGIN_ROUTE,
+  TOKEN_COOKIES_KEY,
+  VALIDATOR_ROUTE,
+} from "@/constants";
 import { createVerificator } from "@/services/auth";
 import { persistDataInCookies } from "@/utils/cookies";
 import Link from "next/link";
@@ -29,7 +34,7 @@ export default function RegisterForm() {
       if (res.token && res.id_verificador) {
         persistDataInCookies(TOKEN_COOKIES_KEY, res.token);
         persistDataInCookies(ID_COOKIES_KEY, res.id_verificador);
-        router.push("/validacion");
+        router.push(VALIDATOR_ROUTE);
       } else {
         throw new Error(res.error || "No se pudo registrar el usuario.");
       }
@@ -46,7 +51,7 @@ export default function RegisterForm() {
       className="space-y-4 max-w-2xl mx-auto"
     >
       <FormInput
-        label="Entidad"
+        label="Entidad*"
         {...register("entidad", {
           required: "Campo obligatorio",
           maxLength: { value: 300, message: "Máximo 300 caracteres" },
@@ -65,24 +70,25 @@ export default function RegisterForm() {
           error={errors.cif?.message}
         />
         <FormInput
-          label="DNI"
+          label="DNI*"
           {...register("DNI", {
             pattern: {
               value: /^[0-9XYZxyz]{1}[0-9]{7}[A-Za-z]{1}$/,
               message: "Formato de DNI incorrecto",
             },
+            required: "Campo obligatorio",
           })}
           error={errors.DNI?.message}
         />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <FormInput
-          label="Nombre"
+          label="Nombre*"
           {...register("nombre", { required: "Campo obligatorio" })}
           error={errors.nombre?.message}
         />
         <FormInput
-          label="Apellidos"
+          label="Apellidos*"
           {...register("apellidos", { required: "Campo obligatorio" })}
           error={errors.apellidos?.message}
         />
@@ -105,7 +111,7 @@ export default function RegisterForm() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <FormInput
-          label="Email"
+          label="Email*"
           type="email"
           {...register("email", {
             required: "Campo obligatorio",
@@ -117,7 +123,7 @@ export default function RegisterForm() {
           error={errors.email?.message}
         />
         <FormInput
-          label="Contraseña"
+          label="Contraseña*"
           type="password"
           {...register("contraseña", {
             required: "La contraseña es obligatoria",
@@ -126,7 +132,7 @@ export default function RegisterForm() {
               message: "Debe tener al menos 8 caracteres",
             },
           })}
-          error={errors.password?.message}
+          error={errors.contraseña?.message}
         />
       </div>
       <Button type="submit" className="w-full" disabled={isSubmitting}>
@@ -135,7 +141,7 @@ export default function RegisterForm() {
       {error && <p className="text-red-500 text-sm text-center">{error}</p>}
       <p className="text-sm text-center">
         ¿Ya tienes una cuenta?{" "}
-        <Link href="/login" className="text-primary hover:underline">
+        <Link href={LOGIN_ROUTE} className="text-primary hover:underline">
           Inicia sesión
         </Link>
       </p>

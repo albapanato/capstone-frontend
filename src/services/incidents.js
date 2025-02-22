@@ -1,11 +1,8 @@
-// Metodo GET preparado,---> por testear desde el front
+import { TOKEN_COOKIES_KEY } from "@/constants";
+import { getPersistedDataFromCookies } from "@/utils/cookies";
 
 export async function getIncidents() {
-  // funciona
   try {
-    if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
-      throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
-    }
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/casos/all`;
     const response = await fetch(url);
 
@@ -16,13 +13,8 @@ export async function getIncidents() {
   } catch {}
 }
 
-// Metodo GET preparado,---> por testear desde el front
-
 export async function getOneIncident(id) {
   try {
-    if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
-      throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
-    }
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/casos/${id}`;
     const response = await fetch(url);
     if (!response?.ok) {
@@ -32,13 +24,8 @@ export async function getOneIncident(id) {
   } catch {}
 }
 
-// Metodo GET preparado,---> por testear desde el front
-
 export async function getIncidentVerified() {
   try {
-    if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
-      throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
-    }
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/casos/verificados`;
     const response = await fetch(url);
     if (!response?.ok) {
@@ -48,13 +35,8 @@ export async function getIncidentVerified() {
   } catch {}
 }
 
-// Metodo GET preparado,---> por testear desde el front
-
 export async function getIncidentNoVerified() {
   try {
-    if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
-      throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
-    }
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/casos/no-verificados`;
     const response = await fetch(url);
     if (!response?.ok) {
@@ -64,13 +46,8 @@ export async function getIncidentNoVerified() {
   } catch {}
 }
 
-// Metodo GET preparado,---> por testear desde el front
-
 export async function getOwnIncidentVerified(id_verificator) {
   try {
-    if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
-      throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
-    }
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/casos/mis-verificados/${id_verificator}`;
     const response = await fetch(url);
     if (!response?.ok) {
@@ -81,12 +58,7 @@ export async function getOwnIncidentVerified(id_verificator) {
 }
 
 export async function createIncident(data) {
-  // funciona
-
   try {
-    if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
-      throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
-    }
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/casos`;
     const response = await fetch(url, {
       method: "POST",
@@ -114,13 +86,9 @@ export async function createIncident(data) {
   }
 }
 
-// Metodo PUT preparado,---> por testear
-
+// Metodo PUT preparado
 export async function updateIncident(id, data) {
   try {
-    if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
-      throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
-    }
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/casos/${id}`;
     const response = await fetch(url, {
       method: "PUT",
@@ -150,13 +118,14 @@ export async function updateIncident(id, data) {
 
 export async function validateIncident(id, data) {
   try {
-    if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
-      throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
-    }
+    const token = getPersistedDataFromCookies(TOKEN_COOKIES_KEY);
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/casos/validar/${id}`;
     const responseJson = await fetch(url, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({
         validar: data.validar,
         fk_verificador: data.fk_verificador,

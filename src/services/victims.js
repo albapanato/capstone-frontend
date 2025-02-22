@@ -1,5 +1,4 @@
 export async function createVictim(data) {
-  console.log(data);
   try {
     if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
       throw new Error("Falta la variable de entorno NEXT_PUBLIC_BACKEND_URL");
@@ -21,12 +20,13 @@ export async function createVictim(data) {
         email: data.email,
       }),
     });
-
-    if (!response?.ok) {
-      throw new Error("Error al enviar los datos de la víctima");
-    }
-
     const result = await response.json();
+    if (!result?.ok) {
+      return {
+        ok: false,
+        message: result.error,
+      };
+    }
     return result; // Retorna la respuesta del servidor
   } catch (error) {
     // console.error("Error enviando los datos:", error);

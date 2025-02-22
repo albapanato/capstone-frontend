@@ -61,7 +61,7 @@ export default function IncidentForm() {
         message: "Suceso creado correctamente",
         type: "success",
       });
-      handleFinalAction(response.id);
+      handleFinalAction(response.id_caso);
     } catch {
       setNotification({ message: "Error al crear el suceso", type: "error" });
     } finally {
@@ -188,10 +188,12 @@ export default function IncidentForm() {
             error={errors.locationName?.message}
           />
           <FormInput
-            label="Descripción de la ubicación"
+            label="Descripción de la ubicación*"
             name="locationDescription"
             type="text"
-            {...register("locationDescription")}
+            {...register("locationDescription", {
+              required: "Campo obligatorio",
+            })}
             error={errors.locationDescription?.message}
           />
           <FormInput

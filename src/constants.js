@@ -12,6 +12,7 @@ export const ADD_WITNESS_ROUTE = "/agregar-testigo";
 export const ADD_VICTIM_ROUTE = "/agregar-victima";
 export const VALIDATOR_ROUTE = "/validacion";
 export const LOGIN_ROUTE = "/login";
+export const REGISTER_ROUTE = "/registro";
 
 export const TITLE_BY_STEP = {
   [HAS_DOCUMENTAL_SOURCES]: "Agregar fuente",

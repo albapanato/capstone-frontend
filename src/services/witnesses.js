@@ -21,12 +21,13 @@ export async function createWitness(data) {
         declaracion: data.declaracion,
       }),
     });
-
-    if (!response?.ok) {
-      throw new Error("Error al enviar los datos del testigo");
-    }
     const result = await response.json();
-
+    if (!result?.ok) {
+      return {
+        ok: false,
+        message: result.error,
+      };
+    }
     return result; // Retorna la respuesta del servidor
   } catch (error) {
     // console.error("Error enviando los datos:", error);

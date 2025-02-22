@@ -4,8 +4,11 @@ import { FormInput } from "@/components/form-components/FormInput";
 import { IncidentSearcher } from "@/components/form-components/IncidentSearcher";
 import { Label } from "@/components/form-components/Label";
 import { Notification } from "@/components/form-components/Notification";
+import {
+  RadioGroup,
+  RadioGroupItem,
+} from "@/components/form-components/RadioGroup";
 import { HOME_ROUTE } from "@/constants";
-import { incidentsMock } from "@/data/incidents";
 import { createWitness } from "@/services/witnesses";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -24,13 +27,13 @@ export default function WitnessForm({ onComplete, incidentId }) {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [notification, setNotification] = useState("");
-
+  const [reload, setReload] = useState(false);
   const isIncidentSelected = !!getValues().incidentId;
   useEffect(() => {
     if (incidentId) {
       setValue("incidentId", incidentId);
     }
-  }, [incidentId, setValue]);
+  }, [incidentId, setValue, reload]);
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
@@ -64,10 +67,10 @@ export default function WitnessForm({ onComplete, incidentId }) {
       >
         <IncidentSearcher
           disabled={!!incidentId}
-          incidents={incidentsMock}
           error={errors.incidentId?.message}
           watch={watch}
           setValue={setValue}
+          callback={() => setReload(!reload)}
         />
         {/* Nombre y Apellidos */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -90,7 +93,13 @@ export default function WitnessForm({ onComplete, incidentId }) {
           <FormInput
             disabled={!isIncidentSelected}
             label="DNI*"
-            {...register("DNI", { required: "Campo obligatorio" })}
+            {...register("DNI", {
+              required: "Campo obligatorio",
+              pattern: {
+                value: /^[0-9XYZxyz]{1}[0-9]{7}[A-Za-z]{1}$/,
+                message: "Formato de DNI incorrecto",
+              },
+            })}
             error={errors.DNI?.message}
           />
           <FormInput
@@ -118,12 +127,22 @@ export default function WitnessForm({ onComplete, incidentId }) {
 
         {/* Sexo */}
         <div>
-          <Label className="text-sm font-medium text-gray-700 mb-2 block"></Label>
-          <FormInput
-            disabled={!isIncidentSelected}
-            label="Sexo"
-            {...register("sexo")}
+          <Label>Sexo</Label>
+          <RadioGroup
             error={errors.sexo?.message}
+            className="flex gap-4 mt-1"
+            value={watch("sexo")}
+            onValueChange={(value) =>
+              setValue("sexo", value, { shouldValidate: true })
+            }
+          >
+            <RadioGroupItem value="mujer" id="mujer" label="Mujer" />
+            <RadioGroupItem value="hombre" id="hombre" label="Hombre" />
+            <RadioGroupItem value="otro" id="otro" label="Otro" />
+          </RadioGroup>
+          <input
+            type="hidden"
+            {...register("sexo", { required: "Campo obligatorio" })}
           />
         </div>
         <div>

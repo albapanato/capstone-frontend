@@ -1,11 +1,10 @@
-import MapComponent from "@/components/location/MapComponent";
-import { incidentsMock } from "@/data/incidents";
-import { getIncident } from "@/services/incidents";
 import { ErrorMessage } from "@/components/error/ErrorMessage";
+import MapComponent from "@/components/location/MapComponent";
+import { getOneIncident } from "@/services/incidents";
 
 async function IncidentPage({ params }) {
   const { id } = await params;
-  const incident = await getIncident(id);
+  const incident = await getOneIncident(id);
   if (!incident) {
     return <ErrorMessage />;
   }

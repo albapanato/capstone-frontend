@@ -14,13 +14,14 @@ export async function createDocumentSource(data) {
         url: data.url,
       }),
     });
-
-    if (!response?.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || "Error al registrar el medio");
+    const result = await response.json();
+    if (!result?.ok) {
+      return {
+        ok: false,
+        message: result.error,
+      };
     }
-
-    return await response.json();
+    return result;
   } catch (error) {
     // console.error("Error en sendMediaData:", error);
   }
