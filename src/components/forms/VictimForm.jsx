@@ -118,13 +118,31 @@ export default function VictimForm({ onComplete, incidentId }) {
           <FormInput
             disabled={!isIncidentSelected}
             label="Teléfono"
-            {...register("telefono")}
+            {...register("telefono", {
+              minLength: {
+                value: 9,
+                message: "Debe tener 9 caracteres",
+              },
+              maxLength: {
+                value: 9,
+                message: "Debe tener 9 caracteres",
+              },
+            })}
             error={errors.telefono?.message}
           />
           <FormInput
             disabled={!isIncidentSelected}
             label="Móvil"
-            {...register("movil")}
+            {...register("movil", {
+              minLength: {
+                value: 9,
+                message: "Debe tener 9 caracteres",
+              },
+              maxLength: {
+                value: 9,
+                message: "Debe tener 9 caracteres",
+              },
+            })}
             error={errors.movil?.message}
           />
         </div>

@@ -1,12 +1,12 @@
 import { Button } from "../form-components/Button";
-import { updateIncident } from "@/services/incidents"; // AGREGAR AL MODAL LA OPCION DE MODIFICAR, COGER ID CON selectedIncident.id
+// import { updateIncident } from "@/services/incidents"; // AGREGAR AL MODAL LA OPCION DE MODIFICAR, COGER ID CON selectedIncident.id
 const ActionModal = ({
   selectedIncident,
   validateIncident,
   invalidateIncident,
   setSelectedIncident,
-  activeTab,
 }) => {
+  const isValidated = !!selectedIncident.fk_verificador;
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
@@ -23,7 +23,7 @@ const ActionModal = ({
           <strong>Descripción:</strong> {selectedIncident.descripcion_caso}
         </p>
         <div className="mt-4 flex justify-center gap-4">
-          {activeTab === "pending" ? (
+          {!isValidated ? (
             <Button variant="default" onClick={validateIncident}>
               Validar
             </Button>

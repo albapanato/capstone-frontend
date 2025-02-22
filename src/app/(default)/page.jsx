@@ -1,10 +1,10 @@
 import { ErrorMessage } from "@/components/error/ErrorMessage";
 import MapComponent from "@/components/location/MapComponent";
-import { getIncidents } from "@/services/incidents";
+import { getIncidents, getIncidentsVerified } from "@/services/incidents";
 import Link from "next/link";
 
 export default async function HomePage() {
-  const response = await getIncidents();
+  const response = await getIncidentsVerified();
   if (!response) {
     return <ErrorMessage />;
   }

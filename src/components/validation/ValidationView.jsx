@@ -60,11 +60,11 @@ const ValidationView = ({
       });
       return;
     }
+    handleRevalidate();
     setNotification({
       message: "Suceso validado correctamente",
       type: "success",
     });
-    handleRevalidate();
   };
 
   const invalidateIncident = async () => {
@@ -81,11 +81,11 @@ const ValidationView = ({
       });
       return;
     }
+    handleRevalidate();
     setNotification({
       message: "Suceso invalidado correctamente",
       type: "success",
     });
-    handleRevalidate();
   };
 
   return (

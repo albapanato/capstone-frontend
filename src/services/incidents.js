@@ -24,7 +24,7 @@ export async function getOneIncident(id) {
   } catch {}
 }
 
-export async function getIncidentVerified() {
+export async function getIncidentsVerified() {
   try {
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/casos/verificados`;
     const response = await fetch(url);

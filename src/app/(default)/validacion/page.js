@@ -2,7 +2,7 @@ import ValidationView from "@/components/validation/ValidationView";
 import { cookies } from "next/headers";
 import {
   getIncidents,
-  getIncidentVerified,
+  getIncidentsVerified,
   getIncidentNoVerified,
   getOwnIncidentVerified,
 } from "@/services/incidents";
@@ -16,7 +16,7 @@ export default async function ValidationPage() {
   if (!idVerificador || !token) return <div>No tienes acceso</div>;
 
   const incidentsAll = (await getIncidents()) || [];
-  const verified = (await getIncidentVerified()) || [];
+  const verified = (await getIncidentsVerified()) || [];
   const noVerified = (await getIncidentNoVerified()) || [];
   const ownVerified = (await getOwnIncidentVerified(idVerificador)) || [];
 
