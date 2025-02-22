@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@/components/error/ErrorMessage";
 import MapComponent from "@/components/location/MapComponent";
-import { getIncidents, getIncidentsVerified } from "@/services/incidents";
+import { getIncidentsVerified } from "@/services/incidents";
 import Link from "next/link";
 
 export default async function HomePage() {
@@ -9,7 +9,6 @@ export default async function HomePage() {
     return <ErrorMessage />;
   }
   const incidents = response;
-  console.log("🚀 ~ HomePage ~ incidents:", incidents);
 
   return (
     <div className="flex flex-col gap-11 text-center">

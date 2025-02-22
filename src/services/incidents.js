@@ -1,5 +1,9 @@
-import { TOKEN_COOKIES_KEY } from "@/constants";
-import { getPersistedDataFromCookies } from "@/utils/cookies";
+import { redirectAction } from "@/actions/redirect-action";
+import { ID_COOKIES_KEY, LOGIN_ROUTE, TOKEN_COOKIES_KEY } from "@/constants";
+import {
+  deletePersistedDataFromCookies,
+  getPersistedDataFromCookies,
+} from "@/utils/cookies";
 
 export async function getIncidents() {
   try {
@@ -133,6 +137,15 @@ export async function validateIncident(id, data) {
     });
     const response = await responseJson.json();
     if (!response?.ok) {
+      if (response.status === 401) {
+        deletePersistedDataFromCookies(TOKEN_COOKIES_KEY);
+        deletePersistedDataFromCookies(ID_COOKIES_KEY);
+        redirectAction(LOGIN_ROUTE);
+        return {
+          ok: false,
+          message: "Necesitas iniciar sesión",
+        };
+      }
       return {
         ok: false,
         message:
